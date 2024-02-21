@@ -1,6 +1,6 @@
 from flask import Flask,render_template, request,redirect, url_for,jsonify
 import json
-import pywhatkit
+# import pywhatkit
 
 app = Flask(__name__)
 def get_data():
@@ -76,19 +76,19 @@ def get_phone(id):   #get phone number
 def get_time(t):  #give the time of employee
     return t.get('time')
 
-def msg_sent(id):
-    m_data=get_m_info(id)
-    m_data.sort(key=get_time)
-    phone=get_phone(id)
-    if phone!="":
-        for i in m_data:
-            if i["time"]!="":
-                name=i['m_info']
-                msg=f"Important Remainder!!!\nmedicine time: {name}"
-                hour, minute = i['time'].split(":")
-                minute=int(minute)
-                hour=int(hour)
-                pywhatkit.sendwhatmsg(phone,msg,hour,min)
+# def msg_sent(id):
+#     m_data=get_m_info(id)
+#     m_data.sort(key=get_time)
+#     phone=get_phone(id)
+#     if phone!="":
+#         for i in m_data:
+#             if i["time"]!="":
+#                 name=i['m_info']
+#                 msg=f"Important Remainder!!!\nmedicine time: {name}"
+#                 hour, minute = i['time'].split(":")
+#                 minute=int(minute)
+#                 hour=int(hour)
+#                 pywhatkit.sendwhatmsg(phone,msg,hour,min)
 
 @app.route("/shedule/<id>",methods=["GET","POST"])
 def shedule(id):
@@ -96,12 +96,12 @@ def shedule(id):
     data=show_shed(id)
     if data:
         found=True
-    if request.method=="POST":
-        button=request.form.get("rem")
-        if button=="rem":
-            phone=request.form.get("phone")
-            add_phone(id,phone)
-            msg_sent(id)
+    # if request.method=="POST":
+    #     button=request.form.get("rem")
+    #     if button=="rem":
+    #         phone=request.form.get("phone")
+    #         add_phone(id,phone)
+            # msg_sent(id)
     return render_template("shedule.html",data=data,found=found,id=id)
 
 @app.route("/home/<id>",methods=["GET","POST"])
